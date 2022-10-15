@@ -1,12 +1,7 @@
 from tabulate import tabulate
 import copy
-# tabuleiro = [[1, 0, 0, 0, 0], [0, 1, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]
-# tabuleiro2 = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
-# tabuleiro3 = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
-formas = 0
-tabuleirosDasFormas = []
 
-def resolucao(tabuleiro, linha):
+def resolucao(tabuleiro, linha=0):
     global formas
     if linha >= len(tabuleiro):
         formas += 1
@@ -81,11 +76,18 @@ def seguro(tabuleiro, linha, coluna):
     return True
 
 
-teste = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
-# print(tabulate(teste, tablefmt='fancy_grid'))
 
-resolucao(teste, 0)
+formas = 0
+tabuleirosDasFormas = []
+
+tamanho = 4
+tabuleiro = [[0 for _ in range(tamanho)] for _ in range(tamanho)]
+
+
+resolucao(tabuleiro)
 for tabuleiro in tabuleirosDasFormas:
     print(tabulate(tabuleiro, tablefmt='fancy_grid'))
 print("formas:", formas)
+
+#TODO criar o tabuleiro a partir da linha de comando (passa 4 cria tabuleiro 4x4)
