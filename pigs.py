@@ -4,10 +4,7 @@ import copy
 def resolucao(tabuleiro, maximoDeRainhasNoTabuleiro, rainhasNoTabuleiro=0, linha=0):
     global formas
     if rainhasNoTabuleiro < maximoDeRainhasNoTabuleiro:
-        if rainhasNoTabuleiro == maximoDeRainhasNoTabuleiro:
-            formas += 1
-            tabuleirosDasFormas.append(copy.deepcopy(tabuleiro))
-
+    
         for coluna in range(len(tabuleiro)):
             if seguro(tabuleiro, linha, coluna):
                 tabuleiro[linha][coluna] = 1
@@ -86,12 +83,12 @@ def seguro(tabuleiro, linha, coluna):
 formas = 0
 tabuleirosDasFormas = []
 
-tamanho = 12
+tamanho = 8
 tabuleiro = [[0 for _ in range(tamanho)] for _ in range(tamanho)]
 
 
 # resolucao(tabuleiro, 1)
-resolucao(tabuleiro, 12)
+resolucao(tabuleiro, 8)
 # for tabuleiro in tabuleirosDasFormas:
 #     print(tabulate(tabuleiro, tablefmt='fancy_grid'))
 print("formas:", formas)
@@ -100,4 +97,5 @@ print("formas:", formas)
 #TODO criar funcao auxiliar para colocar as rainhas,
 # mudar no tabuleiro as casas atacadas para -1
 # pode remover a seguro() depois disso, é só verificar se é um -1 como primeira 
-# condicao de parada da recursao (usar os loops da seguro() como base)
+# condicao de parada da recursao (usar os loops da seguro() como base), pode ser 
+# que fique pior
