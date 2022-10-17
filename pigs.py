@@ -1,7 +1,8 @@
 from tabulate import tabulate
 import copy
 
-def resolucao(tabuleiro, maximoDeRainhasNoTabuleiro, rainhasNoTabuleiro=0, linha=0):
+
+def resolucao(tabuleiro, maximoDeRainhasNoTabuleiro, linha=0, rainhasNoTabuleiro=0):
     global formas
     if rainhasNoTabuleiro < maximoDeRainhasNoTabuleiro:
     
@@ -10,7 +11,7 @@ def resolucao(tabuleiro, maximoDeRainhasNoTabuleiro, rainhasNoTabuleiro=0, linha
                 tabuleiro[linha][coluna] = 1
                 rainhasNoTabuleiro += 1
 
-                if resolucao(tabuleiro, maximoDeRainhasNoTabuleiro, rainhasNoTabuleiro, linha + 1):
+                if resolucao(tabuleiro, maximoDeRainhasNoTabuleiro, linha + 1, rainhasNoTabuleiro):
                     return True
 
                 tabuleiro[linha][coluna] = 0
@@ -83,14 +84,15 @@ def seguro(tabuleiro, linha, coluna):
 formas = 0
 tabuleirosDasFormas = []
 
-tamanho = 8
+tamanho = 4
 tabuleiro = [[0 for _ in range(tamanho)] for _ in range(tamanho)]
 
 
 # resolucao(tabuleiro, 1)
-resolucao(tabuleiro, 8)
-# for tabuleiro in tabuleirosDasFormas:
-#     print(tabulate(tabuleiro, tablefmt='fancy_grid'))
+for linha in range(len(tabuleiro)):
+    resolucao(tabuleiro, 1, linha)
+for tabuleiro in tabuleirosDasFormas:
+    print(tabulate(tabuleiro, tablefmt='fancy_grid'))
 print("formas:", formas)
 
 #TODO criar o tabuleiro a partir da linha de comando (passa 4 cria tabuleiro 4x4)
