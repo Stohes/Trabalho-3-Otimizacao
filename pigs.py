@@ -1,21 +1,27 @@
 from tabulate import tabulate
 import copy
 
-def resolucao(tabuleiro, linha=0):
+def resolucao(tabuleiro, maximoDeRainhasNoTabuleiro, rainhasNoTabuleiro=0, linha=0):
     global formas
-    if linha >= len(tabuleiro):
+    if rainhasNoTabuleiro < maximoDeRainhasNoTabuleiro:
+        if linha >= len(tabuleiro):
+            formas += 1
+            tabuleirosDasFormas.append(copy.deepcopy(tabuleiro))
+
+        for coluna in range(len(tabuleiro)):
+
+            if seguro(tabuleiro, linha, coluna):
+                tabuleiro[linha][coluna] = 1
+                rainhasNoTabuleiro += 1
+
+                if resolucao(tabuleiro, maximoDeRainhasNoTabuleiro, rainhasNoTabuleiro, linha + 1):
+                    return True
+
+                tabuleiro[linha][coluna] = 0
+                rainhasNoTabuleiro -= 1
+    else:
         formas += 1
         tabuleirosDasFormas.append(copy.deepcopy(tabuleiro))
-    
-    for coluna in range(len(tabuleiro)):
-        
-        if seguro(tabuleiro, linha, coluna):
-            tabuleiro[linha][coluna] = 1
-            
-            if resolucao(tabuleiro, linha + 1):
-                return True
-            
-            tabuleiro[linha][coluna] = 0
             
     return False
             
@@ -81,11 +87,12 @@ def seguro(tabuleiro, linha, coluna):
 formas = 0
 tabuleirosDasFormas = []
 
-tamanho = 4
+tamanho = 8
 tabuleiro = [[0 for _ in range(tamanho)] for _ in range(tamanho)]
 
 
-resolucao(tabuleiro)
+# resolucao(tabuleiro, 1)
+resolucao(tabuleiro, 8)
 for tabuleiro in tabuleirosDasFormas:
     print(tabulate(tabuleiro, tablefmt='fancy_grid'))
 print("formas:", formas)
