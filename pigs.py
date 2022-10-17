@@ -89,8 +89,14 @@ tabuleiro = [[0 for _ in range(tamanho)] for _ in range(tamanho)]
 
 
 # resolucao(tabuleiro, 1)
-for linha in range(len(tabuleiro)):
-    resolucao(tabuleiro, 1, linha)
+
+for rainhasNoTabuleiro in range(1, 5):
+    for linha in range(len(tabuleiro)):
+        resolucao(tabuleiro, rainhasNoTabuleiro, linha)
+
+# for linha in range(len(tabuleiro)):
+#     resolucao(tabuleiro, 1, linha)
+    
 for tabuleiro in tabuleirosDasFormas:
     print(tabulate(tabuleiro, tablefmt='fancy_grid'))
 print("formas:", formas)
