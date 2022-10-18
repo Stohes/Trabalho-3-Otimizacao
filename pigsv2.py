@@ -2,12 +2,12 @@ from tabulate import tabulate
 import copy
 
 tamanho = 4
-tabuleiro = [["x" for _ in range(tamanho)] for _ in range(tamanho)]
-
-tabuleirosDasSolucoesDiferentes = []
-
 porcosDesejados = 4
 galinhasDesejadas = 4
+
+tabuleiro = [["" for _ in range(tamanho)] for _ in range(tamanho)]
+tabuleirosDasSolucoesDiferentes = []
+
 
 linhasPorcos = set()
 colunasPorcos = set()
@@ -46,7 +46,7 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
                 colunasPorcos.remove(coluna)
                 diagonaisPositivasPorcos.remove(linha + coluna)
                 diagonaisNegativasPorcos.remove(linha - coluna)
-                tabuleiro[linha][coluna] = "x"
+                tabuleiro[linha][coluna] = ""
 
     if porcosDesejados == porcosNoTabuleiro and galinhasNoTabuleiro < galinhasDesejadas:
         for linha in range(len(tabuleiro)):
@@ -68,7 +68,7 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
                 colunasGalinhas.remove(coluna)
                 diagonaisPositivasGalinhas.remove(linha + coluna)
                 diagonaisNegativasGalinhas.remove(linha - coluna)
-                tabuleiro[linha][coluna] = "x"
+                tabuleiro[linha][coluna] = ""
         
 
 rainhasDiferenciado(porcosDesejados, galinhasDesejadas)
