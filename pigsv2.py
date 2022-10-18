@@ -28,8 +28,10 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
     
     if porcosNoTabuleiro < porcosDesejados:
         for linha in range(len(tabuleiro)):
+            if linha in linhasPorcos:
+                continue
             for coluna in range(len(tabuleiro)):
-                if linha in linhasPorcos or coluna in colunasPorcos or (linha + coluna) in diagonaisPositivasPorcos or (linha - coluna) in diagonaisNegativasPorcos:
+                if coluna in colunasPorcos or (linha + coluna) in diagonaisPositivasPorcos or (linha - coluna) in diagonaisNegativasPorcos:
                     continue
                 
                 linhasPorcos.add(linha)
@@ -48,8 +50,10 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
 
     if porcosDesejados == porcosNoTabuleiro and galinhasNoTabuleiro < galinhasDesejadas:
         for linha in range(len(tabuleiro)):
+            if linha in linhasGalinhas:
+                continue
             for coluna in range(len(tabuleiro)):
-                if tabuleiro[linha][coluna] == "P" or linha in linhasGalinhas or coluna in colunasGalinhas or (linha + coluna) in diagonaisPositivasGalinhas or (linha - coluna) in diagonaisNegativasGalinhas:
+                if tabuleiro[linha][coluna] == "P" or coluna in colunasGalinhas or (linha + coluna) in diagonaisPositivasGalinhas or (linha - coluna) in diagonaisNegativasGalinhas:
                     continue
                 
                 linhasGalinhas.add(linha)
