@@ -7,40 +7,67 @@ tabuleiro = [["x" for _ in range(tamanho)] for _ in range(tamanho)]
 tabuleirosDasSolucoesDiferentes = []
 
 porcosDesejados = 2
+galinhasDesejadas = 2
 
-linhas = set()
-colunas = set()
-diagonaisPositivas = set()
-diagonaisNegativas = set()
+linhasPorcos = set()
+colunasPorcos = set()
+diagonaisPositivasPorcos = set()
+diagonaisNegativasPorcos = set()
+
+linhasGalinhas = set()
+colunasGalinhas = set()
+diagonaisPositivasGalinhas = set()
+diagonaisNegativasGalinhas = set()
 
 
-def rainhasDiferenciado(porcosDesejados, porcosNoTabuleiro=0):
-    if porcosDesejados == porcosNoTabuleiro:
+def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0, galinhasNoTabuleiro=0):
+    if porcosDesejados == porcosNoTabuleiro and galinhasDesejadas == galinhasNoTabuleiro:
         if tabuleiro not in tabuleirosDasSolucoesDiferentes:
             tabuleirosDasSolucoesDiferentes.append(copy.deepcopy(tabuleiro))
             return
     
-    for linha in range(len(tabuleiro)):
-        for coluna in range(len(tabuleiro)):
-            if linha in linhas or coluna in colunas or (linha + coluna) in diagonaisPositivas or (linha - coluna) in diagonaisNegativas:
-                continue
-            
-            linhas.add(linha)
-            colunas.add(coluna)
-            diagonaisPositivas.add(linha + coluna)
-            diagonaisNegativas.add(linha - coluna)
-            tabuleiro[linha][coluna] = "Q"
+    if porcosNoTabuleiro < porcosDesejados:
+        for linha in range(len(tabuleiro)):
+            for coluna in range(len(tabuleiro)):
+                if linha in linhasPorcos or coluna in colunasPorcos or (linha + coluna) in diagonaisPositivasPorcos or (linha - coluna) in diagonaisNegativasPorcos:
+                    continue
+                
+                linhasPorcos.add(linha)
+                colunasPorcos.add(coluna)
+                diagonaisPositivasPorcos.add(linha + coluna)
+                diagonaisNegativasPorcos.add(linha - coluna)
+                tabuleiro[linha][coluna] = "P"
 
-            rainhasDiferenciado(porcosDesejados, porcosNoTabuleiro + 1)
-            
-            linhas.remove(linha)
-            colunas.remove(coluna)
-            diagonaisPositivas.remove(linha + coluna)
-            diagonaisNegativas.remove(linha - coluna)
-            tabuleiro[linha][coluna] = "x"
+                rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro + 1, galinhasNoTabuleiro)
+                
+                linhasPorcos.remove(linha)
+                colunasPorcos.remove(coluna)
+                diagonaisPositivasPorcos.remove(linha + coluna)
+                diagonaisNegativasPorcos.remove(linha - coluna)
+                tabuleiro[linha][coluna] = "x"
+
+    if porcosDesejados == porcosNoTabuleiro and galinhasNoTabuleiro < galinhasDesejadas:
+        for linha in range(len(tabuleiro)):
+            for coluna in range(len(tabuleiro)):
+                if linha in linhasGalinhas or coluna in colunasGalinhas or (linha + coluna) in diagonaisPositivasGalinhas or (linha - coluna) in diagonaisNegativasGalinhas:
+                    continue
+                
+                linhasGalinhas.add(linha)
+                colunasGalinhas.add(coluna)
+                diagonaisPositivasGalinhas.add(linha + coluna)
+                diagonaisNegativasGalinhas.add(linha - coluna)
+                tabuleiro[linha][coluna] = "G"
+
+                rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro, galinhasNoTabuleiro + 1)
+                
+                linhasGalinhas.remove(linha)
+                colunasGalinhas.remove(coluna)
+                diagonaisPositivasGalinhas.remove(linha + coluna)
+                diagonaisNegativasGalinhas.remove(linha - coluna)
+                tabuleiro[linha][coluna] = "x"
         
 
-rainhasDiferenciado(porcosDesejados)
+rainhasDiferenciado(porcosDesejados, galinhasDesejadas)
 
 for tabuleiro in tabuleirosDasSolucoesDiferentes:
     print(tabulate(tabuleiro, tablefmt='fancy_grid'))
