@@ -76,11 +76,11 @@ def seguro(tabuleiro, linha, coluna):
 formas = 0
 tabuleirosDasFormas = []
 
-tamanho = 8
+tamanho = 4
 tabuleiro = [[0 for _ in range(tamanho)] for _ in range(tamanho)]
 
 
-resolucao(tabuleiro, 8)
+resolucao(tabuleiro, 2)
 
 # for linha in range(len(tabuleiro)):
 #     resolucao(tabuleiro, 2, linha)
