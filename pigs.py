@@ -4,23 +4,17 @@ import copy
 
 def resolucao(tabuleiro, maximoDePorcosNoTabuleiro, linha=0, porcosNoTabuleiro=0):
     global formas
-    if porcosNoTabuleiro < maximoDePorcosNoTabuleiro:
     
-        for coluna in range(len(tabuleiro)):
-            if seguro(tabuleiro, linha, coluna):
-                tabuleiro[linha][coluna] = 1
-                porcosNoTabuleiro += 1
-
-                if resolucao(tabuleiro, maximoDePorcosNoTabuleiro, linha + 1, porcosNoTabuleiro):
-                    return True
-
-                tabuleiro[linha][coluna] = 0
-                porcosNoTabuleiro -= 1
-    else:
+    if porcosNoTabuleiro == maximoDePorcosNoTabuleiro:
         formas += 1
         tabuleirosDasFormas.append(copy.deepcopy(tabuleiro))
+    
+    for coluna in range(len(tabuleiro)):
+        if seguro(tabuleiro, linha, coluna):
             
-    return False
+            tabuleiro[linha][coluna] = 1
+            resolucao(tabuleiro, maximoDePorcosNoTabuleiro, linha + 1, porcosNoTabuleiro + 1)
+            tabuleiro[linha][coluna] = 0
             
             
 def seguro(tabuleiro, linha, coluna):
@@ -79,24 +73,21 @@ def seguro(tabuleiro, linha, coluna):
     return True
 
 
-
-
 formas = 0
 tabuleirosDasFormas = []
 
-tamanho = 4
+tamanho = 8
 tabuleiro = [[0 for _ in range(tamanho)] for _ in range(tamanho)]
 
 
-# resolucao(tabuleiro, 1)
-
+resolucao(tabuleiro, 8)
 
 # for linha in range(len(tabuleiro)):
-#     resolucao(tabuleiro, 1, linha)
+#     resolucao(tabuleiro, 2, linha)
     
-for porcosNoTabuleiro in range(1, 5):
-    for linha in range(len(tabuleiro)):
-        resolucao(tabuleiro, porcosNoTabuleiro, linha)
+# for porcosNoTabuleiro in range(1, 5):
+#     for linha in range(len(tabuleiro)):
+#         resolucao(tabuleiro, porcosNoTabuleiro, linha)
         
 for tabuleiro in tabuleirosDasFormas:
     print(tabulate(tabuleiro, tablefmt='fancy_grid'))
