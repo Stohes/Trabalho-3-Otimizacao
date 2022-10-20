@@ -1,4 +1,4 @@
-from tabulate import tabulate
+# from tabulate import tabulate
 import copy
 import sys
 
@@ -69,8 +69,8 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
 
 rainhasDiferenciado(porcosDesejados, galinhasDesejadas)
 
-for tabuleiro in tabuleirosDasSolucoesDiferentes:
-    print(tabulate(tabuleiro, tablefmt='fancy_grid'))
+# for tabuleiro in tabuleirosDasSolucoesDiferentes:
+#     print(tabulate(tabuleiro, tablefmt='fancy_grid'))
 
 # print(tabulate(tabuleirosDasSolucoesDiferentes[len(tabuleirosDasSolucoesDiferentes) - 1], tablefmt='fancy_grid'))
 
