@@ -1,9 +1,15 @@
 from tabulate import tabulate
 import copy
+import sys
 
-tamanho = 4
-porcosDesejados = 1
-galinhasDesejadas = 6
+
+tamanho = int(sys.argv[1])
+
+num1 = int(sys.argv[2])
+num2 = int(sys.argv[3])
+
+porcosDesejados = min(num1, num2)
+galinhasDesejadas = max(num1, num2)
 
 tabuleiro = [["" for _ in range(tamanho)] for _ in range(tamanho)]
 tabuleirosDasSolucoesDiferentes = []
@@ -34,8 +40,7 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
                 diagonaisNegativasAtacadasPorPorcos.append(linha - coluna)
                 tabuleiro[linha][coluna] = "P"
 
-                rainhasDiferenciado(
-                    porcosDesejados, galinhasDesejadas, porcosNoTabuleiro + 1, galinhasNoTabuleiro)
+                rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro + 1, galinhasNoTabuleiro)
 
                 linhasAtacadasPorPorcos.remove(linha)
                 colunasAtacadasPorPorcos.remove(coluna)
@@ -58,8 +63,7 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
                     continue
 
                 tabuleiro[linha][coluna] = "G"
-                rainhasDiferenciado(
-                    porcosDesejados, galinhasDesejadas, porcosNoTabuleiro, galinhasNoTabuleiro + 1)
+                rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro, galinhasNoTabuleiro + 1)
                 tabuleiro[linha][coluna] = ""
 
 
