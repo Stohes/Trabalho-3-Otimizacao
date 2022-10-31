@@ -1,12 +1,17 @@
 # from tabulate import tabulate
 import copy
 import sys
+import math
 
+# tamanho = int(sys.argv[1])
 
-tamanho = int(sys.argv[1])
+# num1 = int(sys.argv[2])
+# num2 = int(sys.argv[3])
 
-num1 = int(sys.argv[2])
-num2 = int(sys.argv[3])
+tamanho = 8
+
+num1 = 3
+num2 = 4
 
 porcosDesejados = min(num1, num2)
 galinhasDesejadas = max(num1, num2)
@@ -21,11 +26,27 @@ diagonaisPositivasAtacadasPorPorcos = []
 diagonaisNegativasAtacadasPorPorcos = []
 
 
-def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0, galinhasNoTabuleiro=0):
 
-    if porcosDesejados == porcosNoTabuleiro and galinhasDesejadas == galinhasNoTabuleiro:
-        if tabuleiro not in tabuleirosDasSolucoesDiferentes:
-            tabuleirosDasSolucoesDiferentes.append(copy.deepcopy(tabuleiro))
+def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0):
+
+    global resultado
+    if porcosDesejados == porcosNoTabuleiro:
+        casinhasSafe = 0
+
+
+        for linha in range(len(tabuleiro)):
+            if linha in linhasAtacadasPorPorcos:
+                continue
+            for coluna in range(len(tabuleiro)):
+                if coluna in colunasAtacadasPorPorcos:
+                    continue
+
+                if tabuleiro[linha][coluna] == "P" or (linha + coluna) in diagonaisPositivasAtacadasPorPorcos or (linha - coluna) in diagonaisNegativasAtacadasPorPorcos:
+                    continue
+
+                casinhasSafe += 1
+
+        resultado += math.comb(casinhasSafe, galinhasDesejadas)
         return
 
     if porcosNoTabuleiro < porcosDesejados:
@@ -40,7 +61,7 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
                 diagonaisNegativasAtacadasPorPorcos.append(linha - coluna)
                 tabuleiro[linha][coluna] = "P"
 
-                rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro + 1, galinhasNoTabuleiro)
+                rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro + 1)
 
                 linhasAtacadasPorPorcos.remove(linha)
                 colunasAtacadasPorPorcos.remove(coluna)
@@ -48,24 +69,9 @@ def rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro=0,
                 diagonaisNegativasAtacadasPorPorcos.remove(linha - coluna)
                 tabuleiro[linha][coluna] = ""
 
-    if porcosDesejados == porcosNoTabuleiro and galinhasNoTabuleiro < galinhasDesejadas:
-        for linha in range(len(tabuleiro)):
-            if linha in linhasAtacadasPorPorcos:
-                continue
-            for coluna in range(len(tabuleiro)):
-                if coluna in colunasAtacadasPorPorcos:
-                    continue
 
-                if tabuleiro[linha][coluna] == "G":
-                    continue
 
-                if tabuleiro[linha][coluna] == "P" or (linha + coluna) in diagonaisPositivasAtacadasPorPorcos or (linha - coluna) in diagonaisNegativasAtacadasPorPorcos:
-                    continue
-
-                tabuleiro[linha][coluna] = "G"
-                rainhasDiferenciado(porcosDesejados, galinhasDesejadas, porcosNoTabuleiro, galinhasNoTabuleiro + 1)
-                tabuleiro[linha][coluna] = ""
-
+resultado = 0
 
 rainhasDiferenciado(porcosDesejados, galinhasDesejadas)
 
@@ -74,4 +80,8 @@ rainhasDiferenciado(porcosDesejados, galinhasDesejadas)
 
 # print(tabulate(tabuleirosDasSolucoesDiferentes[len(tabuleirosDasSolucoesDiferentes) - 1], tablefmt='fancy_grid'))
 
-print("formas:", len(tabuleirosDasSolucoesDiferentes))
+# print("formas:", len(tabuleirosDasSolucoesDiferentes))
+
+
+
+print(resultado)
